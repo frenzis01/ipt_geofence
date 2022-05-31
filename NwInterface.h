@@ -70,7 +70,6 @@ class NwInterface {
   long
     n_pkts = 0,
     n_lookups = 0;
-
   inline int getQueueId()                       { return(queueId);                     };
   inline void stopPolling()                     { ifaceRunning = false;                };
   Marker dissectPacket(const u_char *payload, u_int payload_len);

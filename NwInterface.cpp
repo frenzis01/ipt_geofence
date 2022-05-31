@@ -110,7 +110,6 @@ int netfilter_callback(struct nfq_q_handle *qh,
 #else
   payload_len = nfq_get_payload(nfa, (char **)&payload);
 #endif
-
   marker = iface->dissectPacket(payload, payload_len);
 
   return(nfq_set_verdict2(qh, id, NF_ACCEPT, marker, 0, NULL));
@@ -592,13 +591,14 @@ void NwInterface::honeyHarvesting(int n){
 
 void NwInterface::printStats() {
   double
-    time_verdict = clock_verdict / CLOCKS_PER_SEC,
-    time_geolookup = clock_geolookup / CLOCKS_PER_SEC;
+    time_verdict = (double) clock_verdict / CLOCKS_PER_SEC,
+    time_geolookup = (double) clock_geolookup / CLOCKS_PER_SEC;
   
   printf(
-    "\t\t TOTAL | PER PKT\n"
-    "Verdict   %fs | %fs\n"
-    "geoLookup %fs | %fs\n",
+    "\t\t TOTAL | PER PKT (%ld)\n"
+    "Verdict      %fs | %fs\n"
+    "geoLookup    %fs | %fs\n",
+    n_pkts,
     time_verdict, time_verdict / n_pkts,
     time_geolookup, time_geolookup / n_lookups
     );
